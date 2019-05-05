@@ -1,0 +1,88 @@
+class User {
+  String firstName;
+  String lastName;
+  String occupation;
+  double salary;
+  String email;
+
+
+  User({this.firstName, this.lastName, this.occupation, this.salary, this.email});
+
+  static List<User> getUsers() {
+    return <User>[
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+      User(firstName: "Aaryan", lastName: "Shah", occupation: 'Programmer', salary: 22.5, email: 'some@email.com'),
+
+    ];
+  }
+}
