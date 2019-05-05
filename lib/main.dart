@@ -42,8 +42,15 @@ class Result {
 }
 
 class ResultsDataSource extends DataTableSource {
-  final List<Result> _results;
-  ResultsDataSource(this._results);
+  List<Result> _results;
+  String filter;
+//  ResultsDataSource(this._results, [String filter]);
+
+  ResultsDataSource(List<Result> results, [String filter]) {
+    this._results = results;
+    this.filter = filter;
+
+  }
 
 
   void _sort<T>(Comparable<T> getField(Result d), bool ascending) {
@@ -66,6 +73,22 @@ class ResultsDataSource extends DataTableSource {
   DataRow getRow(int index) {
     assert(index >= 0);
     if (index >= _results.length) return null;
+
+    if(null != this.filter) {
+      if (this.filter.length > 0) {
+//        _results.forEach((res) {
+//          if (res.region.contains('Dublin')) {
+//            print(res.region);
+//          }
+//
+//        });
+       _results = _results.where((elem) => elem.region.contains(this.filter)).toList();
+
+
+      }
+    }
+
+
     final Result result = _results[index];
     return DataRow.byIndex(
         index: index,
@@ -103,9 +126,11 @@ class ResultsDataSource extends DataTableSource {
   }
 }
 
+
+
 class DataTableDemo extends StatefulWidget {
-  ResultsDataSource _resultsDataSource = ResultsDataSource([]);
-  bool isLoaded = false;
+  final ResultsDataSource _resultsDataSource = ResultsDataSource([]);
+  final bool isLoaded = false;
 
   @override
   _DataTableDemoState createState() => _DataTableDemoState();
@@ -117,6 +142,19 @@ class _DataTableDemoState extends State<DataTableDemo> {
   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage + 10;
   int _sortColumnIndex;
   bool _sortAscending = true;
+  TextEditingController _searchController = TextEditingController();
+  String filter;
+
+
+  @override
+  void initState() {
+    _searchController.addListener(() {
+      setState(() {
+        this.filter = _searchController.text;
+      });
+    });
+    super.initState();
+  }
 
   void _sort<T>(
       Comparable<T> getField(Result d), int columnIndex, bool ascending) {
@@ -127,14 +165,45 @@ class _DataTableDemoState extends State<DataTableDemo> {
     });
   }
 
+  var fetchRes;
+
   Future<void> getData() async {
     final results = await fetchResults(http.Client());
+    this.fetchRes = results;
     if (!isLoaded) {
       setState(() {
         _resultsDataSource = ResultsDataSource(results);
         isLoaded = true;
       });
     }
+  }
+
+  getFilterData() {
+    if (null == this.filter) {
+      return _resultsDataSource;
+    } else {
+      setState(() {
+        _resultsDataSource = ResultsDataSource(this.fetchRes, this.filter);
+        isLoaded = true;
+      });
+//      filterResults =
+//      for(int i = 0; i < _resultsDataSource.rowCount; i++) {
+//          _resultsDataSource.
+//      }
+////      _resultsDataSource.getRow(index)
+//    print(_resultsDataSource.rowCount);
+
+      return _resultsDataSource;
+    }
+
+  }
+
+
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -144,7 +213,14 @@ class _DataTableDemoState extends State<DataTableDemo> {
         appBar: AppBar(
           title: const Text('Data tables'),
         ),
-        body: ListView(padding: const EdgeInsets.all(20.0), children: <Widget>[
+        body: ListView(
+            padding: const EdgeInsets.all(20.0),
+            key: Key('lvdb'),
+            children: <Widget>[
+          TextField(
+            decoration: InputDecoration(labelText: 'Region Search'),
+            controller: _searchController
+          ),
           PaginatedDataTable(
               header: const Text('Census Data'),
               rowsPerPage: _rowsPerPage,
@@ -182,7 +258,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
                     onSort: (int columnIndex, bool ascending) => _sort<String>(
                             (Result d) => d.value, columnIndex, ascending)),
               ],
-              source: _resultsDataSource
+              source: getFilterData()
           ),
         ]));
   }
