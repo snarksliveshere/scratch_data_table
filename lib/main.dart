@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import './config/theme.dart';
 import './data_table_data_source.dart';
 import './ui/buttons.dart';
+import './ui/custom_text_form_fields.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -30,6 +31,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
   TextEditingController _searchController = TextEditingController();
   TextEditingController _regionController = TextEditingController();
   String filter;
+  bool _customFiltersFlag = false;
 
 
   @override
@@ -78,25 +80,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
 
   }
 
-  List<Widget> _sampleRow() {
-    return <Widget>[
-      Flexible(
-        fit: FlexFit.tight,
-        flex: 3,
-        child: Button.info('Show Filters', () =>_getFiltersModal(context)),
-      ),
-
-    ];
-  }
-
-
-  _getFiltersModal(BuildContext context) {
-    return null;
-  }
-  
-
-
-  Widget _customFiltersContainer() {
+  Widget _wrapCustomFiltersContainer() {
     return Container(
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -105,10 +89,55 @@ class _DataTableDemoState extends State<DataTableDemo> {
         verticalDirection: VerticalDirection.down,
         crossAxisAlignment: CrossAxisAlignment.baseline,
         textBaseline: TextBaseline.alphabetic,
-        children: _sampleRow(),
+        children: <Widget>[
+          Flexible(
+            flex: 4,
+            child: Button.info('Show Filters', () {
+              setState(() {
+                _customFiltersFlag = !_customFiltersFlag;
+              });
+            }),
+          ),
+          _customFiltersFlag
+              ? _filtersContainer()
+              : Expanded(
+                  flex: 8,
+                  child: Container(),
+                )
+        ],
       ),
     );
+  }
 
+  Widget _filtersContainer() {
+    return Flexible(
+      flex: 8,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 4,
+                  child: Text('olala'),
+                ),
+                IntrinsicWidth(
+
+
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.amberAccent,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 
 
@@ -136,7 +165,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
             padding: const EdgeInsets.all(20.0),
             key: Key('lvdb'),
             children: <Widget>[
-          _customFiltersContainer(),
+          _wrapCustomFiltersContainer(),
           TextField(
             decoration: InputDecoration(labelText: 'Search'),
             controller: _searchController
