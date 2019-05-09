@@ -82,7 +82,7 @@ class ResultsDataSource extends DataTableSource {
 //          }
 //
 //        });
-       _results = _results.where((elem) => elem.region.contains(this.filter)).toList();
+       _results = _results.where((elem) => elem.region.toLowerCase().contains(this.filter.toLowerCase())).toList();
 
 
       }
