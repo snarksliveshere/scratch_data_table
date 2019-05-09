@@ -1,11 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
+import 'package:http/http.dart' as http;
+import './config/theme.dart';
 import './data_table_data_source.dart';
+import './ui/buttons.dart';
 
 void main() {
-  runApp(MaterialApp(home: DataTableDemo()));
+  runApp(MaterialApp(
+      home: DataTableDemo(),
+      theme: getAppThemeData(),
+  ));
 }
 
 class DataTableDemo extends StatefulWidget {
@@ -78,12 +83,119 @@ class _DataTableDemoState extends State<DataTableDemo> {
 
   }
 
+  Widget _filters() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Flexible(child: Text('Olala')),
+            Flexible(
+              child: TextField(
+                  decoration: InputDecoration(labelText: 'input filters'),
+
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _customFilters() {
+    _showFilters() {
+      return null;
+    }
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+//      mainAxisAlignment: MainAxisAlignment.center,
+//      key: Key('dataTableCustomFilters'),
+//      verticalDirection: VerticalDirection.down,
+//      crossAxisAlignment: CrossAxisAlignment.baseline,
+//      textBaseline: TextBaseline.alphabetic,
+      children: <Widget>[
+        Button.info('Show Filters', () =>_showFilters()),
+        Expanded(
+          child: TextField(
+
+          ),
+        ),
+
+        Button.success('Apply Filters', () =>_showFilters()),
+      ],
+    );
+
+  }
+
+  Widget _customFiltersContainer() {
+    _showFilters() {
+      return null;
+    }
+
+    return Row(
+//      mainAxisSize: MainAxisSize.min,
+//      mainAxisAlignment: MainAxisAlignment.center,
+//      key: Key('dataTableCustomFilters'),
+//      verticalDirection: VerticalDirection.down,
+//      crossAxisAlignment: CrossAxisAlignment.baseline,
+//      textBaseline: TextBaseline.alphabetic,
+      children: <Widget>[
+        Container(child: Button.info('Show Filters', () =>_showFilters())),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           children: <Widget>[
+//             TextField()
+//           ],
+//         ),
+
+
+        Container(child: Button.success('Apply Filters', () =>_showFilters())),
+      ],
+    );
+
+  }
 
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  Widget _dataTableHeader() {
+    return Column(
+      children: <Widget>[
+        Container(
+          child: Text('Data Table Header'),
+          height: 20.0,
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: TextFormField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.amberAccent,
+
+                ),
+              ),
+            ),
+            Expanded(
+              child: TextFormField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.blue,
+
+                ),
+              ),
+            )
+          ],
+        ),
+
+      ],
+    );
   }
 
   @override
@@ -97,12 +209,24 @@ class _DataTableDemoState extends State<DataTableDemo> {
             padding: const EdgeInsets.all(20.0),
             key: Key('lvdb'),
             children: <Widget>[
+          _customFiltersContainer(),
           TextField(
             decoration: InputDecoration(labelText: 'Search'),
             controller: _searchController
           ),
           PaginatedDataTable(
-              header: const Text('Census Data'),
+//              header: const Text('Census Data'),
+//              header: Row(
+//
+//                children: <Widget>[
+//                  Text('Census Data'),
+//                  Expanded(
+//                    child: TextField(),
+//                  )
+//                ],
+//              ),
+              header: _dataTableHeader(),
+
               rowsPerPage: _rowsPerPage,
               onRowsPerPageChanged: (int value) {
                 setState(() {
@@ -114,7 +238,23 @@ class _DataTableDemoState extends State<DataTableDemo> {
               onSelectAll: _resultsDataSource.selectAll,
               columns: <DataColumn>[
                 DataColumn(
-                    label: const Text('Sex'),
+                    label: Column(
+                      children: <Widget>[
+                        Text('Sex'),
+                        Container(
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.amberAccent,
+
+                            ),
+                          ),
+                          width: 100.0,
+                          height: 10.0,)
+
+                      ],
+
+                    ),
                     onSort: (int columnIndex, bool ascending) => _sort<String>(
                             (Result d) => d.sex, columnIndex, ascending)),
                 DataColumn(
