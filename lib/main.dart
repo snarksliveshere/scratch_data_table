@@ -30,6 +30,10 @@ class Result {
 
   bool selected = false;
 
+  List<String> listSelfValues() {
+    return [this.sex, this.region, '${this.year}', this.statistic, this.value];
+  }
+
   factory Result.fromJson(Map<String, dynamic> json) {
     return Result(
       sex: json['sex'] as String,
@@ -76,15 +80,14 @@ class ResultsDataSource extends DataTableSource {
 
     if(null != this.filter) {
       if (this.filter.length > 0) {
-//        _results.forEach((res) {
-//          if (res.region.contains('Dublin')) {
-//            print(res.region);
-//          }
-//
-//        });
-       _results = _results.where((elem) => elem.region.toLowerCase().contains(this.filter.toLowerCase())).toList();
+//       _results = _results.where((elem) => elem.region.toLowerCase().contains(this.filter.toLowerCase())).toList();
 
+       _results = _results.where((elem) {
+          List<String> listValues = elem.listSelfValues().toList();
+          Iterable<String> isContains = listValues.where((item) => item.toLowerCase().contains(this.filter.toLowerCase()));
+          return isContains.length > 0 ? true : false;
 
+       }).toList();
       }
     }
 
@@ -218,7 +221,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
             key: Key('lvdb'),
             children: <Widget>[
           TextField(
-            decoration: InputDecoration(labelText: 'Region Search'),
+            decoration: InputDecoration(labelText: 'Search'),
             controller: _searchController
           ),
           PaginatedDataTable(
