@@ -1,135 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<Result>> fetchResults(http.Client client) async {
-  final response = await client.get('https://api.myjson.com/bins/j5xau');
+import './data_table_data_source.dart';
 
-  // Use the compute function to run parseResults in a separate isolate
-  return compute(parseResults, response.body);
+void main() {
+  runApp(MaterialApp(home: DataTableDemo()));
 }
-
-// A function that will convert a response body into a List<Result>
-List<Result> parseResults(String responseBody) {
-  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-
-  return parsed.map<Result>((json) => Result.fromJson(json)).toList();
-}
-
-class Result {
-  final String sex;
-  final String region;
-  final int year;
-  final String statistic;
-  final String value;
-
-  Result({this.sex, this.region, this.year, this.statistic, this.value});
-
-  bool selected = false;
-
-  List<String> listSelfValues() {
-    return [this.sex, this.region, '${this.year}', this.statistic, this.value];
-  }
-
-  factory Result.fromJson(Map<String, dynamic> json) {
-    return Result(
-      sex: json['sex'] as String,
-      region: json['region'] as String,
-      year: json['year'] as int,
-      statistic: json['statistic'] as String,
-      value: json['value'] as String,
-    );
-  }
-}
-
-class ResultsDataSource extends DataTableSource {
-  List<Result> _results;
-  String filter;
-//  ResultsDataSource(this._results, [String filter]);
-
-  ResultsDataSource(List<Result> results, [String filter]) {
-    this._results = results;
-    this.filter = filter;
-
-  }
-
-
-  void _sort<T>(Comparable<T> getField(Result d), bool ascending) {
-    _results.sort((Result a, Result b) {
-      if (!ascending) {
-        final Result c = a;
-        a = b;
-        b = c;
-      }
-      final Comparable<T> aValue = getField(a);
-      final Comparable<T> bValue = getField(b);
-      return Comparable.compare(aValue, bValue);
-    });
-    notifyListeners();
-  }
-
-  int _selectedCount = 0;
-
-  @override
-  DataRow getRow(int index) {
-    assert(index >= 0);
-    if (index >= _results.length) return null;
-
-    if(null != this.filter) {
-      if (this.filter.length > 0) {
-//       _results = _results.where((elem) => elem.region.toLowerCase().contains(this.filter.toLowerCase())).toList();
-
-       _results = _results.where((elem) {
-          List<String> listValues = elem.listSelfValues().toList();
-          Iterable<String> isContains = listValues.where((item) => item.toLowerCase().contains(this.filter.toLowerCase()));
-          return isContains.length > 0 ? true : false;
-
-       }).toList();
-      }
-    }
-
-
-    final Result result = _results[index];
-    return DataRow.byIndex(
-        index: index,
-        selected: result.selected,
-        onSelectChanged: (bool value) {
-          if (result.selected != value) {
-            _selectedCount += value ? 1 : -1;
-            assert(_selectedCount >= 0);
-            result.selected = value;
-            notifyListeners();
-          }
-        },
-        cells: <DataCell>[
-          DataCell(Text('${result.sex}')),
-          DataCell(Text('${result.region}')),
-          DataCell(Text('${result.year}')),
-          DataCell(Text('${result.statistic}')),
-          DataCell(Text('${result.value}')),
-        ]);
-  }
-
-  @override
-  int get rowCount => _results.length;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get selectedRowCount => _selectedCount;
-
-  void _selectAll(bool checked) {
-    for (Result result in _results) result.selected = checked;
-    _selectedCount = checked ? _results.length : 0;
-    notifyListeners();
-  }
-}
-
-
 
 class DataTableDemo extends StatefulWidget {
   final ResultsDataSource _resultsDataSource = ResultsDataSource([]);
@@ -161,7 +38,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
 
   void _sort<T>(
       Comparable<T> getField(Result d), int columnIndex, bool ascending) {
-    _resultsDataSource._sort<T>(getField, ascending);
+    _resultsDataSource.sort<T>(getField, ascending);
     setState(() {
       _sortColumnIndex = columnIndex;
       _sortAscending = ascending;
@@ -234,7 +111,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
               },
               sortColumnIndex: _sortColumnIndex,
               sortAscending: _sortAscending,
-              onSelectAll: _resultsDataSource._selectAll,
+              onSelectAll: _resultsDataSource.selectAll,
               columns: <DataColumn>[
                 DataColumn(
                     label: const Text('Sex'),
@@ -265,8 +142,4 @@ class _DataTableDemoState extends State<DataTableDemo> {
           ),
         ]));
   }
-}
-
-void main() {
-  runApp(MaterialApp(home: DataTableDemo()));
 }
