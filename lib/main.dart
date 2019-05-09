@@ -134,25 +134,61 @@ class _DataTableDemoState extends State<DataTableDemo> {
       return null;
     }
 
-    return Row(
-//      mainAxisSize: MainAxisSize.min,
-//      mainAxisAlignment: MainAxisAlignment.center,
-//      key: Key('dataTableCustomFilters'),
-//      verticalDirection: VerticalDirection.down,
-//      crossAxisAlignment: CrossAxisAlignment.baseline,
-//      textBaseline: TextBaseline.alphabetic,
-      children: <Widget>[
-        Container(child: Button.info('Show Filters', () =>_showFilters())),
-//         Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//           children: <Widget>[
-//             TextField()
-//           ],
-//         ),
+    return Container(
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        key: Key('dataTableCustomFilters'),
+        verticalDirection: VerticalDirection.down,
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
+        children: <Widget>[
+          Flexible(
+            flex: 4,
+            child: Button.info('Show Filters', () =>_showFilters()),
+          ),
+          Flexible(
+            flex: 4,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        child: Text('olala'),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.red
+                          )
+                        ),
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.amberAccent,
 
+                        ),
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.blue,
 
-        Container(child: Button.success('Apply Filters', () =>_showFilters())),
-      ],
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          Flexible(
+              flex: 4,
+              child: Button.success('Apply Filters', () =>_showFilters())
+          ),
+        ],
+      ),
     );
 
   }
