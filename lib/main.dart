@@ -6,6 +6,7 @@ import './config/theme.dart';
 import './data_table_data_source.dart';
 import './ui/buttons.dart';
 import './ui/custom_text_form_field.dart';
+import './model/result.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -33,6 +34,22 @@ class _DataTableDemoState extends State<DataTableDemo> {
   String filter;
   String columnFilter;
   bool _customFiltersFlag = false;
+  Map<String, String> textControllers = {
+    'key': 'olala',
+    'key2': 'olala2'
+  };
+  String some = 'check';
+
+  Widget _testFor() {
+    List<Text> obj = [];
+//    this.textControllers.forEach((k,v) => Text(v));
+    for(var value in this.textControllers.values) {
+      obj.add(Text(value));
+    }
+    return Row(
+        children: obj
+    );
+  }
 
 
   @override
@@ -85,6 +102,8 @@ class _DataTableDemoState extends State<DataTableDemo> {
     }
 
   }
+
+
 
   Widget _wrapCustomFiltersContainer() {
     return Container(
@@ -177,6 +196,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
             key: Key('lvdb'),
             children: <Widget>[
           _wrapCustomFiltersContainer(),
+          _testFor(),
           TextField(
             decoration: InputDecoration(labelText: 'Search'),
             controller: _searchController
@@ -192,35 +212,82 @@ class _DataTableDemoState extends State<DataTableDemo> {
               sortColumnIndex: _sortColumnIndex,
               sortAscending: _sortAscending,
               onSelectAll: _resultsDataSource.selectAll,
-              columns: <DataColumn>[
-                DataColumn(
-                    label: const Text('Sex'),
-                    onSort: (int columnIndex, bool ascending) => _sort<String>(
-                            (Result d) => d.sex, columnIndex, ascending)
-                ),
-                DataColumn(
-                    label: const Text('Region'),
-                    numeric: true,
-                    onSort: (int columnIndex, bool ascending) => _sort<String>(
-                            (Result d) => d.region, columnIndex, ascending)),
-                DataColumn(
-                    label: const Text('Year'),
-                    numeric: true,
-                    onSort: (int columnIndex, bool ascending) => _sort<num>(
-                            (Result d) => d.year, columnIndex, ascending)),
-                DataColumn(
-                    label: const Text('Data'),
-                    numeric: true,
-                    onSort: (int columnIndex, bool ascending) => _sort<String>(
-                            (Result d) => d.statistic, columnIndex, ascending)),
-                DataColumn(
-                    label: const Text('Value'),
-                    numeric: true,
-                    onSort: (int columnIndex, bool ascending) => _sort<String>(
-                            (Result d) => d.value, columnIndex, ascending)),
-              ],
+//              columns: <DataColumn>[
+//                DataColumn(
+//                    label: const Text('Sex'),
+//                    onSort: (int columnIndex, bool ascending) => _sort<String>(
+//                            (Result d) => d.sex, columnIndex, ascending)
+//                ),
+//                DataColumn(
+//                    label: const Text('Region'),
+//                    numeric: true,
+//                    onSort: (int columnIndex, bool ascending) => _sort<String>(
+//                            (Result d) => d.region, columnIndex, ascending)),
+//                DataColumn(
+//                    label: const Text('Year'),
+//                    numeric: true,
+//                    onSort: (int columnIndex, bool ascending) => _sort<num>(
+//                            (Result d) => d.year, columnIndex, ascending)),
+//                DataColumn(
+//                    label: const Text('Data'),
+//                    numeric: true,
+//                    onSort: (int columnIndex, bool ascending) => _sort<String>(
+//                            (Result d) => d.statistic, columnIndex, ascending)),
+//                DataColumn(
+//                    label: const Text('Value'),
+//                    numeric: true,
+//                    onSort: (int columnIndex, bool ascending) => _sort<String>(
+//                            (Result d) => d.value, columnIndex, ascending)),
+//              ],
+              columns: _buildDataTableHeaders(),
               source: getFilterData()
           ),
         ]));
+  }
+
+  List<DataColumn> _buildDataTableHeaders() {
+    List<DataColumn> columns = <DataColumn>[];
+
+    for(String val in Result.listSelfKeys) {
+      Function compareFunc;
+      switch (val) {
+        case 'sex':
+          compareFunc = (Result d) { return d.sex; };
+          break;
+        case 'region':
+          compareFunc = (Result d) { return d.region; };
+          break;
+        case 'year':
+          compareFunc = (Result d) { return d.year; };
+          break;
+        case 'statistic':
+          compareFunc = (Result d) { return d.statistic; };
+          break;
+        case 'value':
+          compareFunc = (Result d) { return d.value; };
+          break;
+      }
+      DataColumn obj;
+      if ('year' == val) {
+        obj = DataColumn(
+            label: Text(val),
+            numeric: true,
+            onSort: (int columnIndex, bool ascending) => _sort<num>(
+                compareFunc, columnIndex, ascending
+            )
+        );
+      } else {
+        obj = DataColumn(
+            label: Text(val),
+            numeric: true,
+            onSort: (int columnIndex, bool ascending) => _sort<String>(
+                compareFunc, columnIndex, ascending
+            )
+        );
+      }
+      columns.add(obj);
+    }
+
+    return columns;
   }
 }
