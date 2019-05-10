@@ -24,10 +24,12 @@ List<Result> parseResults(String responseBody) {
 class ResultsDataSource extends DataTableSource {
   List<Result> _results;
   String filter;
+  String columnFilter;
 
-  ResultsDataSource(List<Result> results, [String filter]) {
+  ResultsDataSource(List<Result> results, [String filter, String columnFilter]) {
     this._results = results;
     this.filter = filter;
+    this.columnFilter = columnFilter;
 
   }
 
@@ -51,6 +53,8 @@ class ResultsDataSource extends DataTableSource {
   DataRow getRow(int index) {
     assert(index >= 0);
     if (index >= _results.length) return null;
+    print(this.filter);
+    print(this.columnFilter);
 
     if(null != this.filter) {
       if (this.filter.length > 0) {
@@ -62,6 +66,18 @@ class ResultsDataSource extends DataTableSource {
           return isContains.length > 0 ? true : false;
 
         }).toList();
+      }
+    }
+
+    if (null != this.columnFilter) {
+      if (this.columnFilter.length > 0) {
+       _results = _results.where((elem) => elem.region.toLowerCase().contains(this.columnFilter.toLowerCase())).toList();
+
+//        _results = _results.where((elem) {
+//          List<String> listValues = elem.listSelfValues().toList();
+//          Iterable<String> isContains = listValues.where((item) => item.toLowerCase().contains(this.filter.toLowerCase()));
+//          return isContains.length > 0 ? true : false;
+//        }).toList();
       }
     }
 

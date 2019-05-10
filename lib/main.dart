@@ -31,6 +31,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
   TextEditingController _searchController = TextEditingController();
   TextEditingController _regionController = TextEditingController();
   String filter;
+  String columnFilter;
   bool _customFiltersFlag = false;
 
 
@@ -39,6 +40,11 @@ class _DataTableDemoState extends State<DataTableDemo> {
     _searchController.addListener(() {
       setState(() {
         this.filter = _searchController.text;
+      });
+    });
+    _regionController.addListener(() {
+      setState(() {
+        this.columnFilter = _regionController.text;
       });
     });
     super.initState();
@@ -67,11 +73,11 @@ class _DataTableDemoState extends State<DataTableDemo> {
   }
 
   getFilterData() {
-    if (null == this.filter) {
+    if (null == this.filter && null == this.columnFilter) {
       return _resultsDataSource;
     } else {
       setState(() {
-        _resultsDataSource = ResultsDataSource(this.fetchRes, this.filter);
+        _resultsDataSource = ResultsDataSource(this.fetchRes, this.filter, this.columnFilter);
         isLoaded = true;
       });
 
@@ -84,6 +90,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
     return Container(
       child: Row(
         key: Key('dataTableCustomFilters'),
+        crossAxisAlignment: CrossAxisAlignment.start,
 //        mainAxisSize: MainAxisSize.max,
 //        mainAxisAlignment: MainAxisAlignment.center,
 //
@@ -126,18 +133,15 @@ class _DataTableDemoState extends State<DataTableDemo> {
                     ),
                     Expanded(
                     flex: 8,
-                      child: CustomTextFormField(),
+                      child: CustomTextFormField(_regionController),
                     ),
                   ],
                 ),
               ),
               Container(
-                child: FlatButton(
-                  onPressed: () {
-                    return null;
-                  },
-                  child: Text('Apply')
-                ),
+                child: Button.success('Apply', ()  {
+                  print(_regionController.text);
+                }),
               ),
             ],
           ),
