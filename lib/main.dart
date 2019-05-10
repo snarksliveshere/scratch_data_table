@@ -30,10 +30,10 @@ class _DataTableDemoState extends State<DataTableDemo> {
   int _sortColumnIndex;
   bool _sortAscending = true;
   TextEditingController _searchController = TextEditingController();
-  TextEditingController _regionController = TextEditingController();
   Map<String, TextEditingController> listTextEditingControllers = <String,TextEditingController>{};
   String filter;
   String columnFilter;
+  Map<String, String> columnFilters = <String, String>{};
   bool _customFiltersFlag = false;
   List<String> resultKeys = [];
 
@@ -48,35 +48,25 @@ class _DataTableDemoState extends State<DataTableDemo> {
 
   @override
   void initState() {
+    this.resultKeys = Result.listSelfKeys;
+    for(String val in this.resultKeys) {
+      this.listTextEditingControllers[val] = TextEditingController();
+    }
     _searchController.addListener(() {
       setState(() {
         this.filter = _searchController.text;
       });
     });
-    _regionController.addListener(() {
-      setState(() {
-        this.columnFilter = _regionController.text;
+    listTextEditingControllers.forEach((k,v) {
+      v.addListener(() {
+        this.columnFilters[k] = v.text;
       });
     });
-    this.resultKeys = Result.listSelfKeys;
-    for(String val in this.resultKeys) {
-      this.listTextEditingControllers[val] = TextEditingController();
-    }
-    print(this.listTextEditingControllers['region'].toString());
     super.initState();
   }
 
 
-  Widget _testFor() {
-    List<Text> obj = [];
-//    this.textControllers.forEach((k,v) => Text(v));
-    for(var value in this.textControllers.values) {
-      obj.add(Text(value));
-    }
-    return Row(
-        children: obj
-    );
-  }
+
 
   void _sort<T>(
       Comparable<T> getField(Result d), int columnIndex, bool ascending) {
@@ -101,11 +91,11 @@ class _DataTableDemoState extends State<DataTableDemo> {
   }
 
   getFilterData() {
-    if (null == this.filter && null == this.columnFilter) {
+    if (null == this.filter && this.columnFilters.isEmpty) {
       return _resultsDataSource;
     } else {
       setState(() {
-        _resultsDataSource = ResultsDataSource(this.fetchRes, this.filter, this.columnFilter);
+        _resultsDataSource = ResultsDataSource(this.fetchRes, this.filter, this.columnFilters);
         isLoaded = true;
       });
 
@@ -172,7 +162,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
 
     Container applyButton = Container(
         child: Button.success('Apply', ()  {
-        return null;
+        this.getFilterData();
       }),
     );
     filterColumnsRows.add(applyButton);
@@ -197,7 +187,6 @@ class _DataTableDemoState extends State<DataTableDemo> {
   @override
   void dispose() {
     _searchController.dispose();
-    _regionController.dispose();
     super.dispose();
   }
 
@@ -313,4 +302,16 @@ class _DataTableDemoState extends State<DataTableDemo> {
 
     return columns;
   }
+
+  Widget _testFor() {
+    List<Text> obj = [];
+//    this.textControllers.forEach((k,v) => Text(v));
+    for(var value in this.textControllers.values) {
+      obj.add(Text(value));
+    }
+    return Row(
+        children: obj
+    );
+  }
+
 }

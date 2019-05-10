@@ -24,12 +24,12 @@ List<Result> parseResults(String responseBody) {
 class ResultsDataSource extends DataTableSource {
   List<Result> _results;
   String filter;
-  String columnFilter;
+  Map<String, String> columnFilters;
 
-  ResultsDataSource(List<Result> results, [String filter, String columnFilter]) {
+  ResultsDataSource(List<Result> results, [String filter, Map<String, String> columnFilters]) {
     this._results = results;
     this.filter = filter;
-    this.columnFilter = columnFilter;
+    this.columnFilters = columnFilters;
 
   }
 
@@ -53,8 +53,8 @@ class ResultsDataSource extends DataTableSource {
   DataRow getRow(int index) {
     assert(index >= 0);
     if (index >= _results.length) return null;
-    print(this.filter);
-    print(this.columnFilter);
+    print('olala');
+    print(this.columnFilters.toString());
 
     if(null != this.filter) {
       if (this.filter.length > 0) {
@@ -68,19 +68,24 @@ class ResultsDataSource extends DataTableSource {
         }).toList();
       }
     }
+    if (null != this.columnFilters) {
+      print(this.columnFilters.toString());
 
-    if (null != this.columnFilter) {
-      if (this.columnFilter.length > 0) {
-       _results = _results.where((elem) => elem.region.toLowerCase().contains(this.columnFilter.toLowerCase())).toList();
+      _results = _results.where((elem) {
+        Map<String, String> resultMapKeyValues = elem.mapSelfKeyValues();
+        List<String> marker = [];
+        this.columnFilters.forEach((k, v) {
+          if (null != v) {
+            if (resultMapKeyValues[k].toLowerCase().contains(v.toLowerCase())) {
+              marker.add(v);
+            }
+          }
+        });
 
-//        _results = _results.where((elem) {
-//          List<String> listValues = elem.listSelfValues().toList();
-//          Iterable<String> isContains = listValues.where((item) => item.toLowerCase().contains(this.filter.toLowerCase()));
-//          return isContains.length > 0 ? true : false;
-//        }).toList();
-      }
+        return marker.length == this.columnFilters.length ? true : false;
+
+      }).toList();
     }
-
 
     final Result result = _results[index];
     return DataRow.byIndex(

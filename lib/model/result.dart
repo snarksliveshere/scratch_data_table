@@ -15,6 +15,16 @@ class Result {
     return [this.sex, this.region, '${this.year}', this.statistic, this.value];
   }
 
+  Map<String, String> mapSelfKeyValues() {
+    return {
+      'sex': this.sex,
+      'region': this.region,
+      'year': '${this.year}',
+      'statistic': this.statistic,
+      'value': this.value
+    };
+  }
+
 //  List<String> listSelfKeys() {
 //    return ['sex', 'region', 'year', 'statistic', 'value'];
 //  }
