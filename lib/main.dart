@@ -31,25 +31,19 @@ class _DataTableDemoState extends State<DataTableDemo> {
   bool _sortAscending = true;
   TextEditingController _searchController = TextEditingController();
   TextEditingController _regionController = TextEditingController();
+  Map<String, TextEditingController> listTextEditingControllers = <String,TextEditingController>{};
   String filter;
   String columnFilter;
   bool _customFiltersFlag = false;
+  List<String> resultKeys = [];
+
   Map<String, String> textControllers = {
     'key': 'olala',
     'key2': 'olala2'
   };
-  String some = 'check';
 
-  Widget _testFor() {
-    List<Text> obj = [];
-//    this.textControllers.forEach((k,v) => Text(v));
-    for(var value in this.textControllers.values) {
-      obj.add(Text(value));
-    }
-    return Row(
-        children: obj
-    );
-  }
+
+
 
 
   @override
@@ -64,7 +58,24 @@ class _DataTableDemoState extends State<DataTableDemo> {
         this.columnFilter = _regionController.text;
       });
     });
+    this.resultKeys = Result.listSelfKeys;
+    for(String val in this.resultKeys) {
+      this.listTextEditingControllers[val] = TextEditingController();
+    }
+    print(this.listTextEditingControllers['region'].toString());
     super.initState();
+  }
+
+
+  Widget _testFor() {
+    List<Text> obj = [];
+//    this.textControllers.forEach((k,v) => Text(v));
+    for(var value in this.textControllers.values) {
+      obj.add(Text(value));
+    }
+    return Row(
+        children: obj
+    );
   }
 
   void _sort<T>(
@@ -138,33 +149,45 @@ class _DataTableDemoState extends State<DataTableDemo> {
 
   // working search controller
 
+  List<Widget> _buildColumnFilters() {
+    List<Widget> filterColumnsRows = <Widget>[];
+
+    for(String val in this.resultKeys) {
+      Container cnt = Container(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 4,
+              child: Text('${val[0].toUpperCase()}${val.substring(1)}'),
+            ),
+            Expanded(
+              flex: 8,
+              child: CustomTextFormField(this.listTextEditingControllers[val]),
+            ),
+          ],
+        ),
+      );
+      filterColumnsRows.add(cnt);
+    }
+
+    Container applyButton = Container(
+        child: Button.success('Apply', ()  {
+        return null;
+      }),
+    );
+    filterColumnsRows.add(applyButton);
+
+
+    return filterColumnsRows;
+  }
+
   Widget _filtersContainer() {
     return Flexible(
       flex: 8,
       child: Container(
         child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 4,
-                      child: Text('Region'),
-                    ),
-                    Expanded(
-                    flex: 8,
-                      child: CustomTextFormField(_regionController),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                child: Button.success('Apply', ()  {
-                  print(_regionController.text);
-                }),
-              ),
-            ],
+            children: _buildColumnFilters(),
           ),
       ),
     );
@@ -248,7 +271,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
   List<DataColumn> _buildDataTableHeaders() {
     List<DataColumn> columns = <DataColumn>[];
 
-    for(String val in Result.listSelfKeys) {
+    for(String val in this.resultKeys) {
       Function compareFunc;
       switch (val) {
         case 'sex':
