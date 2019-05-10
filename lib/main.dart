@@ -117,6 +117,8 @@ class _DataTableDemoState extends State<DataTableDemo> {
     );
   }
 
+  // working search controller
+
   Widget _filtersContainer() {
     return Flexible(
       flex: 8,
