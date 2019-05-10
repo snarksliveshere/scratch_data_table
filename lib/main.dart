@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import './config/theme.dart';
 import './data_table_data_source.dart';
 import './ui/buttons.dart';
-import './ui/custom_text_form_fields.dart';
+import './ui/custom_text_form_field.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -83,12 +83,13 @@ class _DataTableDemoState extends State<DataTableDemo> {
   Widget _wrapCustomFiltersContainer() {
     return Container(
       child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
         key: Key('dataTableCustomFilters'),
-        verticalDirection: VerticalDirection.down,
-        crossAxisAlignment: CrossAxisAlignment.baseline,
-        textBaseline: TextBaseline.alphabetic,
+//        mainAxisSize: MainAxisSize.max,
+//        mainAxisAlignment: MainAxisAlignment.center,
+//
+//        verticalDirection: VerticalDirection.down,
+//        crossAxisAlignment: CrossAxisAlignment.baseline,
+//        textBaseline: TextBaseline.alphabetic,
         children: <Widget>[
           Flexible(
             flex: 4,
@@ -100,7 +101,7 @@ class _DataTableDemoState extends State<DataTableDemo> {
           ),
           _customFiltersFlag
               ? _filtersContainer()
-              : Expanded(
+              : Flexible(
                   flex: 8,
                   child: Container(),
                 )
@@ -112,30 +113,34 @@ class _DataTableDemoState extends State<DataTableDemo> {
   Widget _filtersContainer() {
     return Flexible(
       flex: 8,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Container(
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 4,
-                  child: Text('olala'),
-                ),
-                IntrinsicWidth(
-
-
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.amberAccent,
+      child: Container(
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 4,
+                      child: Text('Region'),
                     ),
-                  ),
+                    Expanded(
+                    flex: 8,
+                      child: CustomTextFormField(),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          )
-        ],
+              ),
+              Container(
+                child: FlatButton(
+                  onPressed: () {
+                    return null;
+                  },
+                  child: Text('Apply')
+                ),
+              ),
+            ],
+          ),
       ),
     );
   }
