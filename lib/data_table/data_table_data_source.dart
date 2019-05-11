@@ -80,12 +80,19 @@ class ResultsDataSource extends DataTableSource {
             notifyListeners();
           }
         },
-        cells: <DataCell>[
-          DataCell(Text('${result.mapSelfKeyValues()['city']}')),
-          DataCell(Text('${result.mapSelfKeyValues()['rating']}')),
-          DataCell(Text('${result.mapSelfKeyValues()['population']}')),
-          DataCell(Text('${result.mapSelfKeyValues()['country']}')),
-        ]);
+        cells: _listDataCell(result) 
+    );
+  }
+
+  List<DataCell> _listDataCell(result) {
+    List<DataCell> listDataCell = <DataCell>[];
+
+    for(String val in Result.listSelfKeys) {
+      DataCell dataCell = DataCell(Text('${result.mapSelfKeyValues()[val]}'));
+      listDataCell.add(dataCell);
+    }
+
+    return listDataCell;
   }
 
   @override

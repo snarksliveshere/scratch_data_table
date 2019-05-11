@@ -9,11 +9,12 @@ class ApiController {
 
   ApiController.getData();
 
-  final String _api = 'https://api.myjson.com/bins/15u7wm';
+//  final String _api = 'https://api.myjson.com/bins/15u7wm';
+//  final String _api = 'https://jsonplaceholder.typicode.com/users';
+  final String _api = 'https://my-json-server.typicode.com/snarksliveshere/servers/users';
 
   Future<List<Result>> _fetchResults(http.Client client) async {
     final response = await client.get(_api);
-
     // Use the compute function to run parseResults in a separate isolate
 //  return compute(parseResults, response.body);
     return _parseResults(response.body);

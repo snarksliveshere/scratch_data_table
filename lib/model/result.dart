@@ -1,42 +1,42 @@
 class Result {
-  String _city;
-  int _rating;
-  int _population;
-  String _country;
+  String _name;
+  String _email;
+  String _phone;
+  String _website;
 
-  static const List<String> listSelfKeys = ['city', 'rating', 'population', 'country'];
+  static const List<String> listSelfKeys = ['name', 'email', 'phone', 'website'];
 
 
-//  Result({this.city, this.rating, this.population, this.country, this.selected});
+//  Result({this.name, this.email, this.phone, this.website, this.selected});
 
-  Result({String city, int rating, int population, String country}) {
-    _city = city;
-    _rating = rating;
-    _population = population;
-    _country = country;
+  Result({String name, String email, String phone, String website}) {
+    _name = name;
+    _email = email;
+    _phone = phone;
+    _website = website;
   }
 
   bool selected = false;
 
   List<String> listSelfValues() {
-    return [_city, '$_rating', '$_population', _country];
+    return [_name, _email, _phone, _website];
   }
 
   Map<String, String> mapSelfKeyValues() {
     return {
-      'city': _city,
-      'rating': '$_rating',
-      'population': '$_population',
-      'country': _country,
+      'name': _name,
+      'email': _email,
+      'phone': _phone,
+      'website': _website,
     };
   }
 
   factory Result.fromJson(Map<String, dynamic> json) {
     return Result(
-      city: json['city'] as String,
-      rating: json['rating'] as int,
-      population: json['population'] as int,
-      country: json['country'] as String,
+      name: json['name'] as String,
+      email: json['email'] as String,
+      phone: json['phone'] as String,
+      website: json['website'] as String,
     );
   }
 }
