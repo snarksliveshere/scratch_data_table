@@ -12,7 +12,8 @@ Future<List<Result>> fetchResults(http.Client client) async {
   final response = await client.get('https://api.myjson.com/bins/15u7wm');
 
   // Use the compute function to run parseResults in a separate isolate
-  return compute(parseResults, response.body);
+//  return compute(parseResults, response.body);
+  return parseResults(response.body);
 }
 
 // A function that will convert a response body into a List<Result>
