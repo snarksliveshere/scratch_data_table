@@ -6,9 +6,10 @@ import 'package:http/http.dart' as http;
 import '../model/result.dart';
 
 export '../model/result.dart';
-//https://api.myjson.com/bins/jr1d2
+
+
 Future<List<Result>> fetchResults(http.Client client) async {
-  final response = await client.get('https://api.myjson.com/bins/j5xau');
+  final response = await client.get('https://api.myjson.com/bins/15u7wm');
 
   // Use the compute function to run parseResults in a separate isolate
   return compute(parseResults, response.body);
@@ -58,8 +59,6 @@ class ResultsDataSource extends DataTableSource {
 
     if(null != this.filter) {
       if (this.filter.length > 0) {
-//       _results = _results.where((elem) => elem.region.toLowerCase().contains(this.filter.toLowerCase())).toList();
-
         _results = _results.where((elem) {
           List<String> listValues = elem.listSelfValues().toList();
           Iterable<String> isContains = listValues.where((item) => item.toLowerCase().contains(this.filter.toLowerCase()));
@@ -100,11 +99,10 @@ class ResultsDataSource extends DataTableSource {
           }
         },
         cells: <DataCell>[
-          DataCell(Text('${result.sex}')),
-          DataCell(Text('${result.region}')),
-          DataCell(Text('${result.year}')),
-          DataCell(Text('${result.statistic}')),
-          DataCell(Text('${result.value}')),
+          DataCell(Text('${result.mapSelfKeyValues()['city']}')),
+          DataCell(Text('${result.mapSelfKeyValues()['rating']}')),
+          DataCell(Text('${result.mapSelfKeyValues()['population']}')),
+          DataCell(Text('${result.mapSelfKeyValues()['country']}')),
         ]);
   }
 

@@ -1,41 +1,42 @@
 class Result {
-  final String sex;
-  final String region;
-  final int year;
-  final String statistic;
-  final String value;
+  String _city;
+  int _rating;
+  int _population;
+  String _country;
 
-  static const List<String> listSelfKeys = ['sex', 'region', 'year', 'statistic', 'value'];
+  static const List<String> listSelfKeys = ['city', 'rating', 'population', 'country'];
 
-  Result({this.sex, this.region, this.year, this.statistic, this.value});
+
+//  Result({this.city, this.rating, this.population, this.country, this.selected});
+
+  Result({String city, int rating, int population, String country}) {
+    _city = city;
+    _rating = rating;
+    _population = population;
+    _country = country;
+  }
 
   bool selected = false;
 
   List<String> listSelfValues() {
-    return [this.sex, this.region, '${this.year}', this.statistic, this.value];
+    return [_city, '$_rating', '$_population', _country];
   }
 
   Map<String, String> mapSelfKeyValues() {
     return {
-      'sex': this.sex,
-      'region': this.region,
-      'year': '${this.year}',
-      'statistic': this.statistic,
-      'value': this.value
+      'city': _city,
+      'rating': '$_rating',
+      'population': '$_population',
+      'country': _country,
     };
   }
 
-//  List<String> listSelfKeys() {
-//    return ['sex', 'region', 'year', 'statistic', 'value'];
-//  }
-
   factory Result.fromJson(Map<String, dynamic> json) {
     return Result(
-      sex: json['sex'] as String,
-      region: json['region'] as String,
-      year: json['year'] as int,
-      statistic: json['statistic'] as String,
-      value: json['value'] as String,
+      city: json['city'] as String,
+      rating: json['rating'] as int,
+      population: json['population'] as int,
+      country: json['country'] as String,
     );
   }
 }
