@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 import './config/theme.dart';
-import './data_table_data_source.dart';
+import 'package:user_data_table/data_table/data_table_data_source.dart';
 import './ui/buttons.dart';
 import './ui/custom_text_form_field.dart';
-import './model/result.dart';
 
 void main() {
   runApp(MaterialApp(
