@@ -55,13 +55,10 @@ class _DataTableCitiesState extends State<DataTableCities> {
       setState(() {
         this.listOfResult = results;
         _resultsDataSource = ResultsDataSource(results);
+        //TODO: What for?
         isLoaded = true;
       });
   }
-
-
-
-
 
   void _sort<T>(
       Comparable<T> getField(Result d), int columnIndex, bool ascending) {
@@ -181,7 +178,13 @@ class _DataTableCitiesState extends State<DataTableCities> {
 
   Widget _dataTableHeader() {
     return Container(
-      child: Text('Data Table Header'),
+      child: Text(
+        'The world\'s most liveable cities in 2019',
+        style: TextStyle(
+          fontSize: 14.0,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
     );
   }
 
