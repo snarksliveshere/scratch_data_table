@@ -5,6 +5,7 @@ import '../apiController.dart';
 import 'package:user_data_table/data_table/data_table_data_source.dart';
 import '../ui/buttons.dart';
 import '../ui/custom_text_form_field.dart';
+import '../ui/cru_dialog.dart';
 
 class DataTableCities extends StatefulWidget {
   final ResultsDataSource _resultsDataSource = ResultsDataSource([]);
@@ -68,13 +69,6 @@ class _DataTableCitiesState extends State<DataTableCities> {
       _sortAscending = ascending;
     });
   }
-
-
-
-
-
-
-
 
   getFilterData() {
     if (null == this.filter && this.columnFilters.isEmpty) {
@@ -188,6 +182,11 @@ class _DataTableCitiesState extends State<DataTableCities> {
     );
   }
 
+  _showDialog() {
+    var dialog = CruDialog.getAddDialog();
+    return dialog.asyncInputDialog(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -199,6 +198,7 @@ class _DataTableCitiesState extends State<DataTableCities> {
             key: Key('lvdb'),
             children: <Widget>[
               _wrapCustomFiltersContainer(),
+              Button.success('Add', () => _showDialog()),
               TextField(
                   decoration: InputDecoration(labelText: 'Search'),
                   controller: _searchController
