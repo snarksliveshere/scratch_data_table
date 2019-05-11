@@ -177,16 +177,24 @@ class _DataTableCitiesState extends State<DataTableCities> {
 
    Widget _saveButton() {
     bool rawValidator = true;
-    if (this.columnFilters.length != this.resultKeys.length) {
-      rawValidator = false;
-    }
+    // TODO: set validation
+//    if (this.columnFilters.length != this.resultKeys.length) {
+//      rawValidator = false;
+//    }
 
     return FlatButton (
       child: Text('Ok'),
       onPressed: rawValidator
           ? () {
             Navigator.of(context).pop();
-
+            ApiController api = ApiController();
+            api.addFakeData(
+                this.columnFilters['name'],
+                this.columnFilters['email'],
+                this.columnFilters['phone'].toString(),
+                this.columnFilters['website']
+            );
+            _assignData();
           }
           : null
       );

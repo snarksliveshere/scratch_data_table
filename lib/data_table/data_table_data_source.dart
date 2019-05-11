@@ -36,8 +36,6 @@ class ResultsDataSource extends DataTableSource {
   DataRow getRow(int index) {
     assert(index >= 0);
     if (index >= _results.length) return null;
-    print('olala');
-    print(this.columnFilters.toString());
 
     if(null != this.filter) {
       if (this.filter.length > 0) {
