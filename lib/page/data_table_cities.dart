@@ -91,12 +91,6 @@ class _DataTableCitiesState extends State<DataTableCities> {
       child: Row(
         key: Key('dataTableCustomFilters'),
         crossAxisAlignment: CrossAxisAlignment.start,
-//        mainAxisSize: MainAxisSize.max,
-//        mainAxisAlignment: MainAxisAlignment.center,
-//
-//        verticalDirection: VerticalDirection.down,
-//        crossAxisAlignment: CrossAxisAlignment.baseline,
-//        textBaseline: TextBaseline.alphabetic,
         children: <Widget>[
           Flexible(
             flex: 4,
@@ -140,24 +134,23 @@ class _DataTableCitiesState extends State<DataTableCities> {
       filterColumnsRows.add(cnt);
     }
 
+    return filterColumnsRows;
+  }
+
+  Widget _filtersContainer() {
     Container applyButton = Container(
       child: Button.success('Apply', ()  {
         this.getFilterData();
       }),
     );
-    filterColumnsRows.add(applyButton);
-
-
-    return filterColumnsRows;
-  }
-
-  Widget _filtersContainer() {
+    List<Widget> filterRows = _buildColumnFilters();
+    filterRows.add(applyButton);
     return Flexible(
       flex: 8,
       child: Container(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: _buildColumnFilters(),
+          children: filterRows,
         ),
       ),
     );
@@ -182,9 +175,43 @@ class _DataTableCitiesState extends State<DataTableCities> {
     );
   }
 
+   Widget _saveButton() {
+    bool rawValidator = true;
+    if (this.columnFilters.length != this.resultKeys.length) {
+      rawValidator = false;
+    }
+
+    return FlatButton (
+      child: Text('Ok'),
+      onPressed: rawValidator
+          ? () {
+            Navigator.of(context).pop();
+
+          }
+          : null
+      );
+  }
+
   _showDialog() {
-    var dialog = CruDialog.getAddDialog();
+    // TODO: clear textEditingControllers
+    var dialog = CruDialog.getAddDialog( _buildColumnFilters(), 'Create new item', _saveButton());
     return dialog.asyncInputDialog(context);
+  }
+
+  _layoutDialogAddItem() {
+    return new Row(
+      children: <Widget>[
+        new Expanded(
+            child: new TextField(
+              autofocus: true,
+              decoration: new InputDecoration(
+                  labelText: 'Team Name', hintText: 'eg. Juventus F.C.'),
+              onChanged: (value) {
+                return null;
+              },
+            ))
+      ],
+    );
   }
 
   @override
