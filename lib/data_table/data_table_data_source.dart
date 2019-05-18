@@ -37,34 +37,34 @@ class ResultsDataSource extends DataTableSource {
     assert(index >= 0);
     if (index >= _results.length) return null;
 
-    if(null != this.filter) {
-      if (this.filter.length > 0) {
-        _results = _results.where((elem) {
-          List<String> listValues = elem.listSelfValues().toList();
-          Iterable<String> isContains = listValues.where((item) => item.toLowerCase().contains(this.filter.toLowerCase()));
-          return isContains.length > 0 ? true : false;
-
-        }).toList();
-      }
-    }
-    if (null != this.columnFilters) {
-      print(this.columnFilters.toString());
-
-      _results = _results.where((elem) {
-        Map<String, String> resultMapKeyValues = elem.mapSelfKeyValues();
-        List<String> marker = [];
-        this.columnFilters.forEach((k, v) {
-          if (null != v) {
-            if (resultMapKeyValues[k].toLowerCase().contains(v.toLowerCase())) {
-              marker.add(v);
-            }
-          }
-        });
-
-        return marker.length == this.columnFilters.length ? true : false;
-
-      }).toList();
-    }
+//    if(null != this.filter) {
+//      if (this.filter.length > 0) {
+//        _results = _results.where((elem) {
+//          List<String> listValues = elem.listSelfValues().toList();
+//          Iterable<String> isContains = listValues.where((item) => item.toLowerCase().contains(this.filter.toLowerCase()));
+//          return isContains.length > 0 ? true : false;
+//
+//        }).toList();
+//      }
+//    }
+//    if (null != this.columnFilters) {
+//      print(this.columnFilters.toString());
+//
+//      _results = _results.where((elem) {
+//        Map<String, String> resultMapKeyValues = elem.mapSelfKeyValues();
+//        List<String> marker = [];
+//        this.columnFilters.forEach((k, v) {
+//          if (null != v) {
+//            if (resultMapKeyValues[k].toLowerCase().contains(v.toLowerCase())) {
+//              marker.add(v);
+//            }
+//          }
+//        });
+//
+//        return marker.length == this.columnFilters.length ? true : false;
+//
+//      }).toList();
+//    }
 
     final Result result = _results[index];
     return DataRow.byIndex(

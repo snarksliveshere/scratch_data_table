@@ -39,6 +39,8 @@ class Button extends StatelessWidget{
       onPressed: this.action,
       color: this.buttonColor,
       textColor: this.buttonTextColor,
+      // no up margin
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
   }
 }

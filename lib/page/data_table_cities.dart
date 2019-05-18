@@ -94,12 +94,13 @@ class _DataTableCitiesState extends State<DataTableCities> {
         children: <Widget>[
           Flexible(
             flex: 4,
-            child: Button.info('Show Filters', () {
+            child: Button.info('Filters', () {
               setState(() {
                 _customFiltersFlag = !_customFiltersFlag;
               });
             }),
           ),
+          SizedBox(width: 10.0),
           _customFiltersFlag
               ? _filtersContainer()
               : Flexible(
@@ -118,15 +119,14 @@ class _DataTableCitiesState extends State<DataTableCities> {
 
     for(String val in this.resultKeys) {
       Container cnt = Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black12),
+          borderRadius: BorderRadius.all(Radius.circular(5.0))
+        ),
         child: Row(
           children: <Widget>[
             Expanded(
-              flex: 4,
-              child: Text('${val[0].toUpperCase()}${val.substring(1)}'),
-            ),
-            Expanded(
-              flex: 8,
-              child: CustomTextFormField(this.listTextEditingControllers[val]),
+              child: CustomTextFormField(this.listTextEditingControllers[val], '${val[0].toUpperCase()}${val.substring(1)}'),
             ),
           ],
         ),
@@ -139,10 +139,17 @@ class _DataTableCitiesState extends State<DataTableCities> {
 
   Widget _filtersContainer() {
     Container applyButton = Container(
+      margin: EdgeInsets.symmetric(vertical: 10.0),
       child: Button.success('Apply', ()  {
         this.getFilterData();
       }),
     );
+//    Container applyButton = Container(
+//      margin: EdgeInsets.symmetric(vertical: 10.0),
+//      child: Button.success('Apply', ()  {
+//        this.getFilterData();
+//      }),
+//    );
     List<Widget> filterRows = _buildColumnFilters();
     filterRows.add(applyButton);
     return Flexible(
@@ -150,6 +157,7 @@ class _DataTableCitiesState extends State<DataTableCities> {
       child: Container(
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: filterRows,
         ),
       ),
@@ -194,7 +202,9 @@ class _DataTableCitiesState extends State<DataTableCities> {
                 this.columnFilters['phone'].toString(),
                 this.columnFilters['website']
             );
-            _assignData();
+            setState(() {
+              _assignData();
+            });
           }
           : null
       );
@@ -233,6 +243,7 @@ class _DataTableCitiesState extends State<DataTableCities> {
             key: Key('lvdb'),
             children: <Widget>[
               _wrapCustomFiltersContainer(),
+              SizedBox(height: 10.0),
               Button.success('Add', () => _showDialog()),
               TextField(
                   decoration: InputDecoration(labelText: 'Search'),
