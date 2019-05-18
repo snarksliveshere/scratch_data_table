@@ -35,6 +35,10 @@ class Button extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8.0))
+      ),
+      splashColor: Colors.amberAccent,
       child: Text(this.buttonText),
       onPressed: this.action,
       color: this.buttonColor,

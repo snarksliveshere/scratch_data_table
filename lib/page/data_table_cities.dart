@@ -244,7 +244,11 @@ class _DataTableCitiesState extends State<DataTableCities> {
             children: <Widget>[
               _wrapCustomFiltersContainer(),
               SizedBox(height: 10.0),
-              Button.success('Add', () => _showDialog()),
+              Align(
+                alignment: Alignment.centerLeft,
+                widthFactor: 150.0,
+                child: Button.success('Add', () => _showDialog()),
+              ),
               TextField(
                   decoration: InputDecoration(labelText: 'Search'),
                   controller: _searchController

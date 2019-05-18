@@ -29,7 +29,7 @@ class CustomTextFormField extends StatelessWidget {
           )
         ),
         fillColor: Colors.greenAccent,
-        contentPadding: EdgeInsets.all(8.0)
+        contentPadding: EdgeInsets.all(8.0),
       ),
     );
   }
