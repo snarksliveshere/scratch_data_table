@@ -178,7 +178,11 @@ class _DataTableCitiesState extends State<DataTableCities> {
 //    }
 
     return FlatButton (
-      child: Text('Ok'),
+      child: Text('Save',
+         style: TextStyle(
+           color: Colors.green
+         ),
+      ),
       onPressed: rawValidator
           ? () {
             Navigator.of(context).pop();
@@ -197,10 +201,22 @@ class _DataTableCitiesState extends State<DataTableCities> {
       );
   }
 
-  _showDialog() {
+  _showAddDialog() async{
     // TODO: clear textEditingControllers
     var dialog = CruDialog.getAddDialog( _buildColumnFilters(), 'Create new item', _saveButton());
-    return dialog.asyncInputDialog(context);
+    return await dialog.asyncInputDialog(context);
+  }
+
+  _showEditDialog() async{
+    // TODO: clear textEditingControllers
+    var dialog = CruDialog.getAddDialog( _buildColumnFilters(), 'Edit item', _saveButton());
+    return await dialog.asyncInputDialog(context);
+  }
+
+  _showDeleteDialog() async{
+    // TODO: clear textEditingControllers
+    var dialog = CruDialog.getAddDialog( _buildColumnFilters(), 'Delete item', _saveButton());
+    return await dialog.asyncInputDialog(context);
   }
 
   _layoutDialogAddItem() {
@@ -237,6 +253,29 @@ class _DataTableCitiesState extends State<DataTableCities> {
     );
   }
 
+  Widget _crudButtons() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 4,
+          child: Button.add('Add', () => _showAddDialog()),
+        ),
+        SizedBox(width: 15.0),
+        Expanded(
+          flex: 4,
+          child: Button.edit('Edit', () => _showEditDialog()),
+        ),
+        SizedBox(width: 15.0),
+        Expanded(
+          flex: 4,
+          child: Button.delete('Delete', () => _showDeleteDialog()),
+        ),
+      ],
+    );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -249,11 +288,8 @@ class _DataTableCitiesState extends State<DataTableCities> {
             children: <Widget>[
               _wrapCustomFiltersContainer(),
               SizedBox(height: 10.0),
-              Align(
-                alignment: Alignment.centerLeft,
-                widthFactor: 150.0,
-                child: Button.success('Add', () => _showDialog()),
-              ),
+              _crudButtons(),
+              SizedBox(height: 10.0),
 //              _allTableSearch(),
               PaginatedDataTable(
                   header: _dataTableHeader(),

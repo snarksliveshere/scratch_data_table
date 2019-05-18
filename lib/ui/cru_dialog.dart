@@ -20,11 +20,17 @@ class CruDialog {
         return AlertDialog(
           title: Text(_title),
           content: ListView(
+            shrinkWrap: true,
             children: _customWidget,
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.black
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
