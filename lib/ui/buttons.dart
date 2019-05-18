@@ -12,14 +12,14 @@ class Button extends StatelessWidget{
 
 
   Button.info(String text, Function action) {
-    this.buttonColor = Colors.blue;
+    this.buttonColor = Colors.lightBlue;
     this.buttonTextColor = Colors.white;
     this.buttonText = text;
     this.action = action;
   }
 
   Button.success(String text, Function action) {
-    this.buttonColor = Colors.green;
+    this.buttonColor = Colors.teal;
     this.buttonTextColor = Colors.white;
     this.buttonText = text;
     this.action = action;

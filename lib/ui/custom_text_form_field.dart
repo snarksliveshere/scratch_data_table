@@ -11,9 +11,16 @@ class CustomTextFormField extends StatelessWidget {
       controller: this.controller,
       decoration: InputDecoration(
         hintText: this.placeholder,
-        border: UnderlineInputBorder(
+        hintStyle: TextStyle(
+          color: Theme.of(context).primaryColor,
+          fontSize: 14.0,
+          fontStyle: FontStyle.italic,
+        ),
+        enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.greenAccent,
+            color: Colors.black12,
+            width: 0.0,
+            style: BorderStyle.none
           )
         ),
         focusedBorder: OutlineInputBorder(
@@ -21,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
             color: Colors.blue
           )
         ),
+        fillColor: Colors.greenAccent,
         contentPadding: EdgeInsets.all(8.0)
       ),
     );
