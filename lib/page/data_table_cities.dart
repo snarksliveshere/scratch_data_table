@@ -53,6 +53,7 @@ class _DataTableCitiesState extends State<DataTableCities> {
     var api = ApiController.getData();
     final List<Result> results = await api.getData();
     print(results.runtimeType);
+    print(results.last.getId);
       setState(() {
         this.listOfResult = results;
         _resultsDataSource = ResultsDataSource(results);
@@ -170,13 +171,12 @@ class _DataTableCitiesState extends State<DataTableCities> {
     );
   }
 
-   Widget _saveButton() {
+   _saveButton() {
     bool rawValidator = true;
     // TODO: set validation
 //    if (this.columnFilters.length != this.resultKeys.length) {
 //      rawValidator = false;
 //    }
-
     return FlatButton (
       child: Text('Save',
          style: TextStyle(
@@ -187,14 +187,19 @@ class _DataTableCitiesState extends State<DataTableCities> {
           ? () {
             Navigator.of(context).pop();
             ApiController api = ApiController();
-            api.addFakeData(
+            Result fakeItem = api.addFakeData(
+                this.listOfResult.last.getId,
                 this.columnFilters['name'],
                 this.columnFilters['email'],
                 this.columnFilters['phone'].toString(),
                 this.columnFilters['website']
             );
+
             setState(() {
-              _assignData();
+              this.listOfResult.add(fakeItem);
+              _resultsDataSource = ResultsDataSource(this.listOfResult);
+              //TODO: What for?
+              isLoaded = true;
             });
           }
           : null
@@ -280,7 +285,7 @@ class _DataTableCitiesState extends State<DataTableCities> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Data tables'),
+          title: const Text('CRUD Data tables with Filters'),
         ),
         body: ListView(
             padding: const EdgeInsets.all(20.0),

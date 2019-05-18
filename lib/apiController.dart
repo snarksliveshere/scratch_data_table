@@ -11,8 +11,6 @@ class ApiController {
 
   List<Result> _listResult = <Result>[];
 
-  Map<String, dynamic> _fakeData;
-
   ApiController.getData();
 
 //  final String _api = 'https://api.myjson.com/bins/15u7wm';
@@ -25,23 +23,21 @@ class ApiController {
 //  return compute(parseResults, response.body);
     return response.body;
   }
-  List<Result> _parseResults(responseBody, [fakeItem = false]) {
+  List<Result> _parseResults(responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+
     _listResult = parsed.map<Result>((json) => Result.fromJson(json)).toList();
-    if (fakeItem) {
-      _listResult.add(Result.fromJson(_fakeData));
-    }
+//    if (fakeItem) {
+//      _listResult.add(Result.fromJson(_fakeData));
+//    }
+
     return _listResult;
   }
 
 
   getData() async {
     String response = await _fetchResults(http.Client());
-    bool fakeItem = false;
-    if (_listResult.length == 10) {
-      fakeItem = true;
-    }
-    return _parseResults(response, fakeItem);
+    return _parseResults(response);
   }
 
   Future<bool> addProduct(
@@ -87,16 +83,15 @@ class ApiController {
     // i create one fake record
   }
 
-  void addFakeData(String name, String email, String phone, String website) {
-    _fakeData = <String, dynamic>
+  addFakeData(int id, String name, String email, String phone, String website) {
+    Map<String, dynamic> fakeItem = <String, dynamic>
                 {
-                  "id": 3,
+                  "id": id + 1,
                   "name": name,
                   "email": email,
                   "phone": phone,
                   "website": website,
                 };
+    return Result.fromJson(fakeItem);
   }
-
-
 }

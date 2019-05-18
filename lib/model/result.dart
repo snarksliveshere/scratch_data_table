@@ -1,4 +1,5 @@
 class Result {
+  int _id;
   String _name;
   String _email;
   String _phone;
@@ -9,7 +10,8 @@ class Result {
 
 //  Result({this.name, this.email, this.phone, this.website, this.selected});
 
-  Result({String name, String email, String phone, String website}) {
+  Result({int id, String name, String email, String phone, String website}) {
+    _id = id;
     _name = name;
     _email = email;
     _phone = phone;
@@ -22,6 +24,8 @@ class Result {
     return [_name, _email, _phone, _website];
   }
 
+  int get getId => _id;
+
   Map<String, String> mapSelfKeyValues() {
     return {
       'name': _name,
@@ -33,6 +37,7 @@ class Result {
 
   factory Result.fromJson(Map<String, dynamic> json) {
     return Result(
+      id: json['id'] as int,
       name: json['name'] as String,
       email: json['email'] as String,
       phone: json['phone'] as String,
