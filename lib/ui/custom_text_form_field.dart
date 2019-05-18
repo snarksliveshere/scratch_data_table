@@ -13,7 +13,6 @@ class CustomTextFormField extends StatelessWidget {
         hintText: this.placeholder,
         hintStyle: TextStyle(
           color: Theme.of(context).primaryColor,
-          fontSize: 14.0,
           fontStyle: FontStyle.italic,
         ),
         enabledBorder: UnderlineInputBorder(

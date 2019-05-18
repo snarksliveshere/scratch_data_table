@@ -119,17 +119,12 @@ class _DataTableCitiesState extends State<DataTableCities> {
 
     for(String val in this.resultKeys) {
       Container cnt = Container(
+        margin: EdgeInsets.only(bottom: 5.0),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black12),
           borderRadius: BorderRadius.all(Radius.circular(5.0))
         ),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: CustomTextFormField(this.listTextEditingControllers[val], '${val[0].toUpperCase()}${val.substring(1)}'),
-            ),
-          ],
-        ),
+        child: CustomTextFormField(this.listTextEditingControllers[val], '${val[0].toUpperCase()}${val.substring(1)}'),
       );
       filterColumnsRows.add(cnt);
     }
@@ -144,23 +139,15 @@ class _DataTableCitiesState extends State<DataTableCities> {
         this.getFilterData();
       }),
     );
-//    Container applyButton = Container(
-//      margin: EdgeInsets.symmetric(vertical: 10.0),
-//      child: Button.success('Apply', ()  {
-//        this.getFilterData();
-//      }),
-//    );
     List<Widget> filterRows = _buildColumnFilters();
     filterRows.add(applyButton);
     return Flexible(
       flex: 8,
-      child: Container(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: filterRows,
         ),
-      ),
     );
   }
 
@@ -232,6 +219,24 @@ class _DataTableCitiesState extends State<DataTableCities> {
     );
   }
 
+  Widget _allTableSearch() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      margin: EdgeInsets.symmetric(vertical: 10.0),
+      child: TextField(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(vertical: 0.0),
+          labelText: 'Search',
+          labelStyle: TextStyle(
+            fontStyle: FontStyle.italic,
+            fontSize: 16.0,
+          ),
+        ),
+        controller: _searchController
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -249,10 +254,7 @@ class _DataTableCitiesState extends State<DataTableCities> {
                 widthFactor: 150.0,
                 child: Button.success('Add', () => _showDialog()),
               ),
-              TextField(
-                  decoration: InputDecoration(labelText: 'Search'),
-                  controller: _searchController
-              ),
+//              _allTableSearch(),
               PaginatedDataTable(
                   header: _dataTableHeader(),
                   rowsPerPage: _rowsPerPage,
