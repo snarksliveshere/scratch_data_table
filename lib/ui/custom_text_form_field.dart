@@ -3,7 +3,15 @@ import 'package:flutter/material.dart';
 class CustomTextFormField extends StatelessWidget {
   TextEditingController controller;
   String placeholder;
+  String initialValue;
   CustomTextFormField(this.controller, this.placeholder);
+//  CustomTextFormField(controller, placeholder, [initialValue]) {
+//    this.controller = controller;
+//    this.placeholder = placeholder;
+//    this.initialValue = initialValue;
+//    print(initialValue);
+//    print(controller);
+//  }
 
   @override
   Widget build(BuildContext context) {

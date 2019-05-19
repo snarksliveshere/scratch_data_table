@@ -40,7 +40,7 @@ class ApiController {
     return _parseResults(response);
   }
 
-  Future<bool> addProduct(
+  addProduct(
       String name, String email, String phone, String website) async {
     final Map<String, dynamic> userData = {
       'name': name,
@@ -55,32 +55,26 @@ class ApiController {
           body: jsonEncode(userData));
 //      if (response.statusCode != 200 && response.statusCode != 201) {
 //        _isLoading = false;
-//        notifyListeners();
 //        return false;
 //      }
 //      _isLoading = false;
-      final Map<String, dynamic> responseData = json.decode(response.body);
+      final Map<String, dynamic> responseData = json.decode(response.body).cast<Map<String, dynamic>>();
       print(responseData.toString());
-//      final Product newProduct = Product(
-//          id: responseData['name'],
-//          title: title,
-//          description: description,
-//          price: price,
-//          image: uploadData['imageUrl'],
-//          imagePath: uploadData['imagePath'],
-//          userEmail: _authenticatedUser.email,
-//          userId: _authenticatedUser.id);
-//      _products.add(newProduct);
-//      notifyListeners();
-      return true;
+      Map<String, dynamic> fakeItem = <String, dynamic>
+      {
+        "id": responseData['id'],
+        "name": responseData['name'],
+        "email": responseData['email'],
+        "phone": responseData['phone'],
+        "website": responseData['website'],
+      };
+      return Result.fromJson(fakeItem);
+//      return true;
     } catch (error) {
 //      _isLoading = false;
-//      notifyListeners();
     print('error');
       return false;
     }
-
-    // i create one fake record
   }
 
   addFakeData(int id, String name, String email, String phone, String website) {

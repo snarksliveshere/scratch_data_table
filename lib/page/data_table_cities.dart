@@ -206,6 +206,83 @@ class _DataTableCitiesState extends State<DataTableCities> {
       );
   }
 
+  _editButton() {
+    bool rawValidator = true;
+    // TODO: set validation
+//    if (this.columnFilters.length != this.resultKeys.length) {
+//      rawValidator = false;
+//    }
+    return FlatButton (
+        child: Text('Edit',
+          style: TextStyle(
+              color: Colors.green
+          ),
+        ),
+        onPressed: () {
+            for(var value in this.listOfResult) {
+              if (value.selected) {
+                Map<String, dynamic> res = value.mapSelfKeyValues();
+                res.forEach((key, value) {
+
+                });
+
+//                setState(() {
+//
+//                });
+              }
+            }
+
+        }
+    );
+  }
+
+  _deleteButton() {
+    bool rawValidator = true;
+    // TODO: set validation
+//    if (this.columnFilters.length != this.resultKeys.length) {
+//      rawValidator = false;
+//    }
+    return FlatButton (
+        child: Text('Delete',
+          style: TextStyle(
+              color: Colors.green
+          ),
+        ),
+        onPressed: () {
+          print(this.listTextEditingControllers['name']);
+        }
+    );
+  }
+
+
+  List<Widget> _buildEditDialog() {
+    List<Widget> filterColumnsRows = <Widget>[];
+    Map<String, dynamic> resultValues;
+    for(var value in this.listOfResult) {
+      if (value.selected) {
+        print(value.mapSelfKeyValues());
+        resultValues = value.mapSelfKeyValues();
+        resultValues.forEach((key, value) {
+          this.listTextEditingControllers[key] = TextEditingController.fromValue(TextEditingValue(text: value));
+        });
+      }
+    }
+
+    for(String val in this.resultKeys) {
+      Container cnt = Container(
+        margin: EdgeInsets.only(bottom: 5.0),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.black12),
+            borderRadius: BorderRadius.all(Radius.circular(5.0))
+        ),
+        child: CustomTextFormField(this.listTextEditingControllers[val], '${val[0].toUpperCase()}${val.substring(1)}'),
+      );
+      filterColumnsRows.add(cnt);
+    }
+
+    return filterColumnsRows;
+  }
+
   _showAddDialog() async{
     // TODO: clear textEditingControllers
     var dialog = CruDialog.getAddDialog( _buildColumnFilters(), 'Create new item', _saveButton());
@@ -214,13 +291,13 @@ class _DataTableCitiesState extends State<DataTableCities> {
 
   _showEditDialog() async{
     // TODO: clear textEditingControllers
-    var dialog = CruDialog.getAddDialog( _buildColumnFilters(), 'Edit item', _saveButton());
+    var dialog = CruDialog.getAddDialog( _buildEditDialog(), 'Edit item', _editButton());
     return await dialog.asyncInputDialog(context);
   }
 
   _showDeleteDialog() async{
     // TODO: clear textEditingControllers
-    var dialog = CruDialog.getAddDialog( _buildColumnFilters(), 'Delete item', _saveButton());
+    var dialog = CruDialog.getAddDialog( _buildColumnFilters(), 'Delete item', _deleteButton());
     return await dialog.asyncInputDialog(context);
   }
 

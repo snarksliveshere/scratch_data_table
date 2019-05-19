@@ -77,6 +77,7 @@ class ResultsDataSource extends DataTableSource {
             result.selected = value;
             notifyListeners();
           }
+        return null;
         },
         cells: _listDataCell(result) 
     );
@@ -88,7 +89,6 @@ class ResultsDataSource extends DataTableSource {
     for(String val in Result.listSelfKeys) {
       DataCell dataCell = DataCell(
         Container(alignment: Alignment.centerLeft, child: Text('${result.mapSelfKeyValues()[val]}', textAlign: TextAlign.start,))
-
       );
       listDataCell.add(dataCell);
     }
@@ -98,6 +98,9 @@ class ResultsDataSource extends DataTableSource {
 
   @override
   int get rowCount => _results.length;
+//
+//  @override
+//  int get rowCount => 5;
 
   @override
   bool get isRowCountApproximate => false;
