@@ -319,7 +319,17 @@ class _DataTableCitiesState extends State<DataTableCities> {
     for(String val in this.resultKeys) {
       Function compareFunc = (Result d) { return d.mapSelfKeyValues()[val]; };
       DataColumn obj = DataColumn(
-          label: Text(val),
+//          label: Text(val),
+          label: Expanded(
+//            alignment: Alignment.center,
+            child: Text(
+              val,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+              ),
+            )
+          ),
           numeric: true,
           onSort: (int columnIndex, bool ascending) => _sort(
               compareFunc, columnIndex, ascending

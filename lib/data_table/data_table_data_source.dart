@@ -86,7 +86,10 @@ class ResultsDataSource extends DataTableSource {
     List<DataCell> listDataCell = <DataCell>[];
 
     for(String val in Result.listSelfKeys) {
-      DataCell dataCell = DataCell(Text('${result.mapSelfKeyValues()[val]}'));
+      DataCell dataCell = DataCell(
+        Container(alignment: Alignment.centerLeft, child: Text('${result.mapSelfKeyValues()[val]}', textAlign: TextAlign.start,))
+
+      );
       listDataCell.add(dataCell);
     }
 
