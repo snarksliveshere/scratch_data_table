@@ -221,17 +221,16 @@ class _DataTableCitiesState extends State<DataTableCities> {
         onPressed: () {
             for(var value in this.listOfResult) {
               if (value.selected) {
-                Map<String, dynamic> res = value.mapSelfKeyValues();
-                res.forEach((key, value) {
-
+                value.setName(this.listTextEditingControllers['name'].text);
+                value.setEmail(this.listTextEditingControllers['email'].text);
+                value.setPhone(this.listTextEditingControllers['phone'].text);
+                value.setWebsite(this.listTextEditingControllers['website'].text);
+                setState(() {
+                  _resultsDataSource = ResultsDataSource(this.listOfResult);
                 });
-
-//                setState(() {
-//
-//                });
+                Navigator.of(context).pop();
               }
             }
-
         }
     );
   }

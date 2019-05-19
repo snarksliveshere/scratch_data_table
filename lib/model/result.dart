@@ -44,4 +44,20 @@ class Result {
       website: json['website'] as String,
     );
   }
+
+  void setName(String value) {
+    _name = value;
+  }
+
+  void setEmail(String value) {
+    _email = value;
+  }
+
+  void setWebsite(String value) {
+    _website = value;
+  }
+
+  void setPhone(String value) {
+    _phone = value;
+  }
 }
