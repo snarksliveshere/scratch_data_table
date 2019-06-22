@@ -12,7 +12,6 @@ class CruDialog {
   }
 
   Future<String> asyncInputDialog(BuildContext context) async {
-    String teamName = '';
     return showDialog<String>(
       context: context,
       barrierDismissible: false, // dialog is dismissible with a tap on the barrier
@@ -21,7 +20,7 @@ class CruDialog {
           title: Text(_title),
           content: ListView(
             shrinkWrap: true,
-            children: _customWidget,
+            children: _customWidget
           ),
           actions: <Widget>[
             FlatButton(

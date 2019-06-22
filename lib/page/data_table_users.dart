@@ -27,12 +27,12 @@ class _DataTableCitiesState extends State<DataTableCities> {
   Map<String, String> columnFilters = <String, String>{};
   bool _customFiltersFlag = false;
   List<String> resultKeys = [];
-  List<Result> listOfResult;
+  List<UserDataTable> listOfResult;
 
   @override
   void initState() {
     _assignData();
-    this.resultKeys = Result.listSelfKeys;
+    this.resultKeys = UserDataTable.listSelfKeys;
     for(String val in this.resultKeys) {
       this.listTextEditingControllers[val] = TextEditingController();
     }
@@ -51,7 +51,7 @@ class _DataTableCitiesState extends State<DataTableCities> {
 
   Future<void> _assignData() async {
     var api = ApiController.getData();
-    final List<Result> results = await api.getData();
+    final List<UserDataTable> results = await api.getData();
     print(results.runtimeType);
     print(results.last.getId);
       setState(() {
@@ -63,7 +63,7 @@ class _DataTableCitiesState extends State<DataTableCities> {
   }
 
   void _sort<T>(
-      Comparable<T> getField(Result d), int columnIndex, bool ascending) {
+      Comparable<T> getField(UserDataTable d), int columnIndex, bool ascending) {
     _resultsDataSource.sort<T>(getField, ascending);
     setState(() {
       _sortColumnIndex = columnIndex;
@@ -142,6 +142,7 @@ class _DataTableCitiesState extends State<DataTableCities> {
     );
     List<Widget> filterRows = _buildColumnFilters();
     filterRows.add(applyButton);
+
     return Flexible(
       flex: 8,
         child: Column(
@@ -162,7 +163,7 @@ class _DataTableCitiesState extends State<DataTableCities> {
   Widget _dataTableHeader() {
     return Container(
       child: Text(
-        'The world\'s most liveable cities in 2019',
+        'Users Data Table',
         style: TextStyle(
           fontSize: 14.0,
           fontWeight: FontWeight.w700,
@@ -187,7 +188,7 @@ class _DataTableCitiesState extends State<DataTableCities> {
           ? () {
             Navigator.of(context).pop();
             ApiController api = ApiController();
-            Result fakeItem = api.addFakeData(
+            UserDataTable fakeItem = api.addFakeData(
                 this.listOfResult.last.getId,
                 this.columnFilters['name'],
                 this.columnFilters['email'],
@@ -393,7 +394,7 @@ class _DataTableCitiesState extends State<DataTableCities> {
     List<DataColumn> columns = <DataColumn>[];
 
     for(String val in this.resultKeys) {
-      Function compareFunc = (Result d) { return d.mapSelfKeyValues()[val]; };
+      Function compareFunc = (UserDataTable d) { return d.mapSelfKeyValues()[val]; };
       DataColumn obj = DataColumn(
 //          label: Text(val),
           label: Expanded(

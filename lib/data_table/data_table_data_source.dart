@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import '../model/result.dart';
+import '../entity/user_data_table.dart';
 
-export '../model/result.dart';
+export '../entity/user_data_table.dart';
 
 
 class ResultsDataSource extends DataTableSource {
-  List<Result> _results;
+  List<UserDataTable> _results;
   String filter;
   Map<String, String> columnFilters;
 
-  ResultsDataSource(List<Result> results, [String filter, Map<String, String> columnFilters]) {
+  ResultsDataSource(List<UserDataTable> results, [String filter, Map<String, String> columnFilters]) {
     this._results = results;
     this.filter = filter;
     this.columnFilters = columnFilters;
 
   }
 
-  void sort<T>(Comparable<T> getField(Result d), bool ascending) {
-    _results.sort((Result a, Result b) {
+  void sort<T>(Comparable<T> getField(UserDataTable d), bool ascending) {
+    _results.sort((UserDataTable a, UserDataTable b) {
       if (!ascending) {
-        final Result c = a;
+        final UserDataTable c = a;
         a = b;
         b = c;
       }
@@ -37,36 +37,36 @@ class ResultsDataSource extends DataTableSource {
     assert(index >= 0);
     if (index >= _results.length) return null;
 
-//    if(null != this.filter) {
-//      if (this.filter.length > 0) {
-//        _results = _results.where((elem) {
-//          List<String> listValues = elem.listSelfValues().toList();
-//          Iterable<String> isContains = listValues.where((item) => item.toLowerCase().contains(this.filter.toLowerCase()));
-//          return isContains.length > 0 ? true : false;
-//
-//        }).toList();
-//      }
-//    }
-//    if (null != this.columnFilters) {
-//      print(this.columnFilters.toString());
-//
-//      _results = _results.where((elem) {
-//        Map<String, String> resultMapKeyValues = elem.mapSelfKeyValues();
-//        List<String> marker = [];
-//        this.columnFilters.forEach((k, v) {
-//          if (null != v) {
-//            if (resultMapKeyValues[k].toLowerCase().contains(v.toLowerCase())) {
-//              marker.add(v);
-//            }
-//          }
-//        });
-//
-//        return marker.length == this.columnFilters.length ? true : false;
-//
-//      }).toList();
-//    }
+    if(null != this.filter) {
+      if (this.filter.length > 0) {
+        _results = _results.where((elem) {
+          List<String> listValues = elem.listSelfValues().toList();
+          Iterable<String> isContains = listValues.where((item) => item.toLowerCase().contains(this.filter.toLowerCase()));
+          return isContains.length > 0 ? true : false;
 
-    final Result result = _results[index];
+        }).toList();
+      }
+    }
+    if (null != this.columnFilters) {
+      print(this.columnFilters.toString());
+
+      _results = _results.where((elem) {
+        Map<String, String> resultMapKeyValues = elem.mapSelfKeyValues();
+        List<String> marker = [];
+        this.columnFilters.forEach((k, v) {
+          if (null != v) {
+            if (resultMapKeyValues[k].toLowerCase().contains(v.toLowerCase())) {
+              marker.add(v);
+            }
+          }
+        });
+
+        return marker.length == this.columnFilters.length ? true : false;
+
+      }).toList();
+    }
+
+    final UserDataTable result = _results[index];
     return DataRow.byIndex(
         index: index,
         selected: result.selected,
@@ -86,7 +86,7 @@ class ResultsDataSource extends DataTableSource {
   List<DataCell> _listDataCell(result) {
     List<DataCell> listDataCell = <DataCell>[];
 
-    for(String val in Result.listSelfKeys) {
+    for(String val in UserDataTable.listSelfKeys) {
       DataCell dataCell = DataCell(
         Container(alignment: Alignment.centerLeft, child: Text('${result.mapSelfKeyValues()[val]}', textAlign: TextAlign.start,))
       );
@@ -109,7 +109,7 @@ class ResultsDataSource extends DataTableSource {
   int get selectedRowCount => _selectedCount;
 
   void selectAll(bool checked) {
-    for (Result result in _results) result.selected = checked;
+    for (UserDataTable result in _results) result.selected = checked;
     _selectedCount = checked ? _results.length : 0;
     notifyListeners();
   }

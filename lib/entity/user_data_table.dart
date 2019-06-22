@@ -1,4 +1,4 @@
-class Result {
+class UserDataTable {
   int _id;
   String _name;
   String _email;
@@ -10,7 +10,7 @@ class Result {
 
 //  Result({this.name, this.email, this.phone, this.website, this.selected});
 
-  Result({int id, String name, String email, String phone, String website}) {
+  UserDataTable({int id, String name, String email, String phone, String website}) {
     _id = id;
     _name = name;
     _email = email;
@@ -35,8 +35,8 @@ class Result {
     };
   }
 
-  factory Result.fromJson(Map<String, dynamic> json) {
-    return Result(
+  factory UserDataTable.fromJson(Map<String, dynamic> json) {
+    return UserDataTable(
       id: json['id'] as int,
       name: json['name'] as String,
       email: json['email'] as String,
